@@ -1,0 +1,30 @@
+﻿@using Cuchillos2023.Models.Models;
+@model Material
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form method="post" asp-controller="Material" asp-action="Edit">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Editar Material</h2>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="NombreMaterial" class="form-label"></label>
+            <input asp-for="NombreMaterial" class="form-control" />
+            <span asp-validation-for="NombreMaterial" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-warning mx-3" style="width:200px">Editar</button>
+        <a asp-controller="Material" asp-action="Index" style="width:200px" class="btn btn-success mx-3">
+            Volver
+        </a>
+
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

@@ -1,0 +1,32 @@
+﻿@using Cuchillos2023.Models.Models;
+@model Categoria
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form method="post" asp-action="Create">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Agregar Categoría</h2>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="NombreCategoria"></label>
+            <input asp-for="NombreCategoria" class="form-control" />
+            <span asp-validation-for="NombreCategoria" class="text-danger"></span>
+        </div>
+@*         <div class="mb-3">
+            <label asp-for="DisplayOrder"></label>
+            <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+
+        </div> *@
+        <button type="submit" class="btn btn-primary" style="width:200px">Guardar</button>
+        <a asp-controller="Categoria" asp-action="Index" style="width:200px" class="btn btn-success">Volver</a>
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

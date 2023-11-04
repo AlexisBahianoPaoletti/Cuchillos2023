@@ -1,0 +1,27 @@
+﻿@using Cuchillos2023.Models.Models;
+@model Material
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form method="post" asp-action="Create">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Agregar Material</h2>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="NombreMaterial"></label>
+            <input asp-for="NombreMaterial" class="form-control" />
+            <span asp-validation-for="NombreMaterial" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:200px">Guardar</button>
+        <a asp-controller="Material" asp-action="Index" style="width:200px" class="btn btn-success">Volver</a>
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
