@@ -19,12 +19,21 @@ namespace Cuchillos2023.DataLayer.Repository
             Materiales = new MaterialRepository(_db);
             Numeros = new NumeroRepository(_db);
             Paises = new PaisRepository(_db);
+            Cuchillos = new CuchilloRepository(_db);
+            Provincias = new ProvinciaRepository(_db);
+            Ciudades = new CiudadRepository(_db);
+
 
         }
         public ICategoriaRepository Categorias { get; private set; }
         public IMaterialRepository Materiales { get; private set; }
         public INumeroRepository Numeros { get; private set; }
         public IPaisRepository Paises { get; private set; }
+        public ICuchillolRepository Cuchillos { get; private set; }
+        public IProvinciaRepository Provincias { get; private set; }
+        public ICiudadRepository Ciudades { get; private set; }
+
+
 
         public void Save()
         {

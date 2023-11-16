@@ -1,0 +1,112 @@
+﻿@using Cuchillos2023.Web.ViewModels;
+@model CuchilloEditVm
+@{
+	ViewData["Title"] = "UpSert";
+}
+
+<form method="post" asp-controller="Cuchillo" asp-action="UpSert" enctype="multipart/form-data">
+	<input type="hidden" asp-for="Cuchillo.Id" />
+	<input type="hidden" asp-for="Cuchillo.ImagenUrl" />
+	<div class="border p-3 mt-4 row">
+
+
+
+		<div class="row">
+
+			<div class="col-9">
+				<div class="row pb-2">
+					<h2 class="text-primary">@(Model.Cuchillo.Id == 0 ? "Nuevo Cuchillo" : "Editar Cuchillo")</h2>
+				</div>
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="row">
+					<div class="col-6">
+
+						<label asp-for="Cuchillo.NombreCuchillo" class="form-label"></label>
+						<input asp-for="Cuchillo.NombreCuchillo" class="form-control" />
+						<span asp-validation-for="Cuchillo.NombreCuchillo" class="text-danger"></span>
+
+					</div>
+					<div class="col-6">
+
+						<label asp-for="Cuchillo.Precio" class="form-label"></label>
+						<input asp-for="Cuchillo.Precio" class="form-control" />
+						<span asp-validation-for="Cuchillo.Precio" class="text-danger"></span>
+
+					</div>
+					<div class="col-6">
+
+						<label asp-for="Cuchillo.CategoriaId" class="form-label"></label>
+						<select asp-for="Cuchillo.CategoriaId" asp-items="Model.CategoriasList" class="form-select">
+							<option disabled selected>--Seleccionar Categoría--</option>
+						</select>
+						<span asp-validation-for="Cuchillo.CategoriaId" class="text-danger"></span>
+					</div>
+					<div class="col-6">
+
+						<label asp-for="Cuchillo.MaterialId" class="form-label"></label>
+						<select asp-for="Cuchillo.MaterialId" asp-items="Model.MaterialesList" class="form-select">
+							<option disabled selected>--Seleccionar Material--</option>
+						</select>
+						<span asp-validation-for="Cuchillo.MaterialId" class="text-danger"></span>
+
+					</div>
+
+					<div class="col-12">
+						<label asp-for="Cuchillo.ImagenUrl"></label>
+						<input type="file" id="uploadBox" name="file" class="form-control" />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<img src="@Model.Cuchillo.ImagenUrl" width="300px" height="300px" style="border:1px solid; border-radius:5px;"
+			</div>
+		</div>
+
+
+
+		<div class="col-12">
+			@if (Model.Cuchillo.Id == 0)
+			{
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:200px">
+					<i class="bi bi-floppy"></i> &nbsp;
+					Guardar
+				</button>
+
+			}
+			else
+			{
+				<button type="submit" class="btn btn-warning" style="width:200px">
+					<i class="bi bi-floppy"></i> &nbsp;
+					Guardar
+				</button>
+
+			}
+			<a asp-controller="Cuchillo" asp-action="Index" style="width:200px" class="btn btn-success">
+				<i class="bi bi-backspace"></i>  &nbsp;
+				Volver
+			</a>
+		</div>
+
+
+	</div>
+</form>
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial"></partial>
+	}
+	<script>
+		function ValidateInput() {
+			if (document.getElementById('uploadBox').value == "") {
+				Swal.fire({
+					icon: 'error',
+					title: 'Ops...',
+					text: '¡Por favor sube una imagen!',
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+
+}

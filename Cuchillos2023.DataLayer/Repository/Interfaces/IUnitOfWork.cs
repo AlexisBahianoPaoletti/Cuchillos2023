@@ -12,6 +12,9 @@ namespace Cuchillos2023.DataLayer.Repository.Interfaces
         IMaterialRepository Materiales { get; }
         INumeroRepository Numeros { get; }
         IPaisRepository Paises { get; }
+        ICuchillolRepository Cuchillos { get; }
+        IProvinciaRepository Provincias { get; }
+        ICiudadRepository Ciudades { get; }
 
         void Save();
     }

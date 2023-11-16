@@ -2,6 +2,9 @@ using Cuchillos2023.DataLayer.Repository.Interfaces;
 using Cuchillos2023.DataLayer.Repository;
 using Cuchillos2023.Models.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Cuchillos2023.Utilities;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Cuchillos2023.Web
 {
@@ -18,8 +21,15 @@ namespace Cuchillos2023.Web
                 .UseSqlServer(builder.Configuration
                 .GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
+            builder.Services.AddRazorPages();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,11 +45,14 @@ namespace Cuchillos2023.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

@@ -1,15 +1,15 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cuchillos2023.Web", "Cuchillos2023.Web\Cuchillos2023.Web.csproj", "{ACB818B9-22A5-47A2-B5E0-235DC38DDA6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cuchillos2023.DataLayer", "Cuchillos2023.DataLayer\Cuchillos2023.DataLayer.csproj", "{BA485914-7CB8-45CB-A6EC-DA8797509D29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cuchillos2023.DataLayer", "Cuchillos2023.DataLayer\Cuchillos2023.DataLayer.csproj", "{BA485914-7CB8-45CB-A6EC-DA8797509D29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cuchillos2023.Models", "Cuchillos2023.Models\Cuchillos2023.Models.csproj", "{C02B9736-3322-49C4-83EE-1925BDD1AD51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cuchillos2023.Utilities", "Cuchillos2023.Utilities\Cuchillos2023.Utilities.csproj", "{E90F02C7-4544-4F07-9F75-274DA9B322DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cuchillos2023.Utilities", "Cuchillos2023.Utilities\Cuchillos2023.Utilities.csproj", "{E90F02C7-4544-4F07-9F75-274DA9B322DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

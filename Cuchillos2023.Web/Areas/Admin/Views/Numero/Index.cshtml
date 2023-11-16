@@ -1,0 +1,60 @@
+﻿@using Cuchillos2023.Models.Models
+@model IEnumerable<Numero>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Lista de Números</h2>
+
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Numero" asp-action="Create">
+                Agregar
+            </a>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (Numero item in Model)
+                {
+                    <tr>
+                        <td width="80%">
+                            @item.Numeroo
+                        </td>
+                        <td width="20%">
+                            <a asp-action="Edit" asp-controller="Numero" asp-route-id="@item.Id" class="btn btn-warning">
+                                Editar
+                            </a>
+                            <a asp-action="Delete" asp-controller="Numero" asp-route-id="@item.Id" class="btn btn-danger">
+                                Borrar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">
+                        Aún no se han agregado números
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+
+
+</div>

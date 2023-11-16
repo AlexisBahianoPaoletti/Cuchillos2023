@@ -1,0 +1,43 @@
+﻿
+@using Cuchillos2023.Web.ViewModels;
+
+@model IEnumerable<CuchilloListVm>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Lista de Cuchillos</h2>
+
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Cuchillo" asp-action="UpSert" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp;
+                Agregar
+            </a>
+        </div>
+    </div>
+    <table id="tblCuchillos" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>NombreCuchillo</th>
+                <th>Precio</th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+ 
+        </tbody>
+    </table>
+
+</div>
+@section Scripts{
+    <script src="~/js/cuchillo.js"></script>
+}
+
+
+
+

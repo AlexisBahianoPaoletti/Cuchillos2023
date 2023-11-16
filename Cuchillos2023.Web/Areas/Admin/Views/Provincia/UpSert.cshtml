@@ -1,0 +1,42 @@
+﻿@using Cuchillos2023.Web.ViewModels
+@model ProvinciaEditVm
+@{
+    ViewData["Title"] = "UpSert";
+}
+
+<form method="post" asp-action="UpSert">
+    <input type="hidden" asp-for="Provincia.Id" />
+
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Nueva Provincia</h2>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Provincia.NombreProvincia"></label>
+            <input asp-for="Provincia.NombreProvincia" class="form-control" />
+            <span asp-validation-for="Provincia.NombreProvincia" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Provincia.PaisId" class="form-label"></label>
+            <select asp-for="Provincia.PaisId" asp-items="Model.PaisesList" class="form-select">
+                <option disabled selected>--Seleccionar País--</option>
+            </select>
+            <span asp-validation-for="Provincia.PaisId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:200px">
+            <i class="bi bi-floppy"></i> &nbsp;
+            Guardar
+        </button>
+        <a asp-controller="Provincia" asp-action="Index" style="width:200px" class="btn btn-success">
+            <i class="bi bi-backspace"></i>  &nbsp;
+            Volver
+        </a>
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
