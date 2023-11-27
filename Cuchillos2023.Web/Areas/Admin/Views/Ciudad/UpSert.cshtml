@@ -9,7 +9,7 @@
 
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Nueva Ciudad</h2>
+            <h2 class="text-primary">@(Model.Ciudad.Id == 0 ? "Nueva Ciudad" : "Editar Ciudad")</h2>
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="mb-3">
