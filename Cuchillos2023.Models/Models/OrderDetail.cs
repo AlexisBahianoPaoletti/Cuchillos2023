@@ -9,33 +9,19 @@ using System.Threading.Tasks;
 
 namespace Cuchillos2023.Models.Models
 {
-    public class ShoppingCart
+    public class OrderDetail
     {
-        [Key]
         public int Id { get; set; }
-
-        //[Required]
-        //[Display(Name = "Producto")]
+        public int OrderId { get; set; }
+        [ForeignKey("OrderId")]
+        [ValidateNever]
+        public OrderHeader OrderHeader { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         [ValidateNever]
         public Producto Producto { get; set; }
-
-
-        public string ApplicationUserId { get; set; }
-        [ForeignKey("ApplicationUserId")]
-        [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
-
-
-
-        //[Required]
-        //[Range(1, 1000)]
         [Display(Name = "Cantidad")]
-        [Range(1, 1000, ErrorMessage = "{0} must be between {1} and {2}")]
         public int Quantity { get; set; }
-
-        
-        public double Precio { get; set; }
+        public double Price { get; set; }
     }
 }

@@ -31,7 +31,9 @@ namespace Cuchillos2023.Models.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Provincia> Provincias { get; set; }
         public DbSet<Ciudad> Ciudades { get; set; }
-
-
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

@@ -1,0 +1,154 @@
+﻿@* @using Cuchillos2023.Web.ViewModels;
+@model IEnumerable<OrderListVm>
+
+
+<div>
+    <div class="d-flex justify-content-between">
+        <div class="p-2">
+            <h2>Lista de Ventas</h2>
+
+        </div>
+
+    </div> 
+    <table id="tblTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.OrderHeader.Id</td>
+                        <td>@item.OrderHeader.Name</td>
+                        <td>@item.OrderHeader.PhoneNumber</td>
+                        <td>@item.OrderHeader.State</td>
+                        <td>@item.OrderHeader.OrderTotal</td>
+                        <td>
+                            <a class="btn btn-info" asp-controller="Order" asp-action="Details" asp-route-id="@item.OrderHeader.Id">
+                                <i class="bi bi-pencil-square"></i>&nbsp;
+                                Detalles
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">
+                        Aún no se han agregado ventas
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+ *@
+
+
+
+@*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*@
+
+
+
+
+
+
+@using Cuchillos2023.Web.ViewModels;
+@model IEnumerable<OrderListVm>
+@{
+    var status = Context.Request.Query["status"];
+    var inprocess = "text-primary";
+    var pending = "text-primary";
+    var completed = "text-primary";
+    var approved = "text-primary";
+    var all = "text-primary";
+    switch (status)
+    {
+        case "inprocess":
+            inprocess = "active text-black";
+            break;
+        case "pending":
+            pending = "active text-black";
+            break;
+        case "completed":
+            completed = "active text-black";
+            break;
+        case "approved":
+            approved = "active text-black";
+            break;
+
+        default:
+            all = "active text-black";
+            break;
+
+    }
+
+
+}
+
+<div>
+    <div class="d-flex justify-content-between">
+        <div class="p-2">
+            <h2>Lista de Ventas</h2>
+
+        </div>
+        <div class="p-2 text-end">
+            <div class="p-2 text-end">
+                <ul class="list-group list-group-horizontal-sm">
+                    <a style="text-decoration:none;" asp-controller="Order"
+                       asp-action="Index" asp-route-status="inprocess">
+                    <li class="list-group-item @inprocess">En Proceso</li>
+                    </a>
+                    <a style="text-decoration:none;" asp-controller="Order"
+                       asp-action="Index" asp-route-status="pending">
+                    <li class="list-group-item @pending">Pendiente</li>
+                    </a>
+                    <a style="text-decoration:none;" asp-controller="Order"
+                       asp-action="Index" asp-route-status="completed">
+                    <li class="list-group-item @completed">Completado</li>
+                    </a>
+                    <a style="text-decoration:none;" asp-controller="Order"
+                       asp-action="Index" asp-route-status="approved">
+                    <li class="list-group-item @approved">Aprovado</li>
+                    </a>
+
+                    <a style="text-decoration:none;" asp-controller="Order"
+                       asp-action="Index" asp-route-status="all">
+                    <li class="list-group-item @all">Todas</li>
+                    </a>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <table id="tblTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+@section Scripts{
+    <script src="~/js/order.js"></script>
+}

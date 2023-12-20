@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Cuchillo>
+﻿@using Cuchillos2023.Web.ViewModels
+
+@model IEnumerable<ProductoListVm>
 @{
     ViewData["Title"] = "Index";
     string ShrinkTitle(string title)
@@ -15,8 +17,8 @@
                     <div class="card">
                         <img src="@item.ImagenUrl" width="200px" height="300px" class="card-img-top rounded" />
                         <div class="card-body">
-                            <h5 class="card-title text-primary">@ShrinkTitle(@item.NombreCuchillo)</h5>
-                            <p class="card-text text-info">by @item.Precio</p>
+                            <h5 class="card-title text-info">@item.NombreCuchillo</h5>
+                            <p class="card-text text-info">Precio: $ @item.Precio</p>
                            
                         </div>
 

@@ -10,6 +10,7 @@
     <ProjectReference Include="..\Cuchillos2023.Utilities\Cuchillos2023.Utilities.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="mercadopago-sdk" Version="2.3.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
@@ -22,6 +23,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\imagenes\cuchillos\" />
+    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 </Project>

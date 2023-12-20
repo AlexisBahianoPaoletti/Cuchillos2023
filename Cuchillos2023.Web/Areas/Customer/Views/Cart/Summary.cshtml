@@ -1,0 +1,279 @@
+﻿
+@using Cuchillos2023.Web.ViewModels;
+@* @using Microsoft.Extensions.Options
+@inject IOptions<Cuchillos2023.Utilities.StripeSettings> Stripe *@
+
+@model ShoppingCartVm
+<form method="post">
+	<br />
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-dark text-light ml-0">
+				<div class=" row container">
+					<div class="col-6">
+						<i class="fa fa-shopping-cart"></i> &nbsp;
+						Orden de Compra
+					</div>
+					<div class="col-6 text-end">
+						<a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-outline-info btn-sm">Volver al Carrito</a>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="container rounded p-2">
+					<div class="row">
+						<div class="col-12 col-lg-6 pb-4">
+							<div class="row">
+								<h4 class="d-flex justify-content-between align-items-center mb-3">
+									<span class="text-info">Detalles del Comprador</span>
+								</h4>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Nombre:</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="@Model.OrderHeader.Name" class="form-control" />
+									<span asp-validation-for="@Model.OrderHeader.Name" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Teléfono:</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="@Model.OrderHeader.PhoneNumber" class="form-control" />
+									<span asp-validation-for="@Model.OrderHeader.PhoneNumber" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Dirección:</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="@Model.OrderHeader.StreetAddress" class="form-control" />
+									<span asp-validation-for="@Model.OrderHeader.StreetAddress" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Ciudad:</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="@Model.OrderHeader.City" class="form-control" />
+									<span asp-validation-for="@Model.OrderHeader.City" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>País:</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="@Model.OrderHeader.State" class="form-control" />
+									<span asp-validation-for="@Model.OrderHeader.State" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row my-1">
+								<div class="col-3">
+									<label>Código Postal:</label>
+								</div>
+								<div class="col-9">
+									<input asp-for="@Model.OrderHeader.ZipCode" class="form-control" />
+									<span asp-validation-for="@Model.OrderHeader.ZipCode" class="text-danger"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-5 offset-lg-1">
+							<h4 class="d-flex justify-content-between align-items-center mb-3">
+								<span class="text-info">Detalles de la Compra</span>
+							</h4>
+							<ul class="list-group mb-3">
+								@foreach (var itemCart in Model.CartList)
+								{
+									<li class="list-group-item d-flex justify-content-between">
+										<div>
+											<h6 class="my-0">@itemCart.Producto.Cuchillo.NombreCuchillo - N: @itemCart.Producto.Numero.Numeroo</h6>
+											<small class="text-muted">Cantidad: @itemCart.Quantity </small>
+										</div>
+										<span class="text-muted">$ @((itemCart.Quantity*itemCart.Producto.Cuchillo.Precio).ToString()) </span>
+									</li>
+
+								}
+
+								<li class="list-group-item d-flex justify-content-between bg-white">
+									<strong style="color:black">Total:</strong>
+									<strong style="color:black">$ @Model.OrderHeader.OrderTotal.ToString()</strong>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-12 col-md-8 pt-2">
+						<p style="color:white; font-size:15px;">
+							Fecha de llegada entre:
+							@DateTime.Now.AddDays(1).ToShortDateString() al @DateTime.Now.AddDays(10).ToShortDateString()
+						</p>
+					</div>
+					@* <div class="col-12 col-md-4">
+						<button type="submit" value="Place Order" class="btn btn-primary form-control">COMPRAR</button>
+					</div> *@
+					<div id="wallet_container"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<script src="https://sdk.mercadopago.com/js/v2"></script>
+	<script >
+
+		/////////////////////////////////////////////////////////////
+
+
+		const mp = new MercadoPago('TEST-fa979d3b-88c5-47de-a3d8-3e0d35ca35ec', {
+			locale: 'es-AR'
+		});
+		const bricksBuilder = mp.bricks();
+		const renderWalletBrick = async (bricksBuilder) => {
+			const settings = {
+				initialization: {
+					preferenceId: @Model.Preference.Id.ToString(),
+					redirectMode: 'modal',
+				},
+				customization: {
+					texts: {
+						action: 'pay',
+						valueProp: 'security_safety',
+					},
+					visual: {
+						hideValueProp: false,
+						buttonBackground: 'black', // default, black, blue, white
+						valuePropColor: 'grey', // grey, white
+						buttonHeight: '48px', // min 48px - max free
+						borderRadius: '6px',
+						verticalPadding: '16px', // min 16px - max free
+						horizontalPadding: '0px', // min 0px - max free
+					},
+					checkout: {
+						theme: {
+							elementsColor: '#4287F5', // color hex code
+							headerColor: '#4287F5', // color hex code
+						},
+					},
+				},
+				callbacks: {
+					onReady: () => {
+						/*
+						Callback called when Brick is ready.
+						Here you can hide loadings from your site, for example.
+						*/
+					},
+					onSubmit: (formData) => {
+						/*
+						Callback called when clicking Wallet Brick
+						this is possible because the brick is a button
+						at this time of submit, you must create the preference
+						*/
+						const yourRequestBodyHere = {
+							items: [
+								{
+									id: 'YOUR_PRODUCT_ID',
+									title: 'YOUR_PRODUCT_TITLE',
+									description: 'YOUR_PRODUCT_DESCRIPTION',
+									quantity: 7,
+									unit_price: 6,
+								},
+							],
+							purpose: 'wallet_purchase',
+						};
+						// return new Promise((resolve, reject) => {
+						// 	fetch('/create_preference', {
+						// 		method: 'POST',
+						// 		headers: {
+						// 			'Content-Type': 'application/json',
+						// 		},
+						// 		body: JSON.stringify(formData),
+						// 	})
+						// 		.then((response) => response.json())
+						// 		.then((response) => {
+						// 			// resolve the promise with the ID of the preference
+						// 			resolve(response.preference_id);
+						// 		})
+						// 		.catch((error) => {
+						// 			// handle error response when trying to create preference
+						// 			reject();
+						// 		});
+						// });
+					},
+				},
+			};
+			window.walletBrickController = await bricksBuilder.create(
+				'wallet',
+				'wallet_container',
+				settings,
+			);
+		};
+		renderWalletBrick(bricksBuilder);
+
+
+
+
+		//////////////////////////////////////////////////////////////
+
+		// const mp = new MercadoPago('TEST-fa979d3b-88c5-47de-a3d8-3e0d35ca35ec', {
+		// 	locale: 'es-AR' // The most common are: 'pt-BR', 'es-AR' and 'en-US'
+		// });
+		// // const bricksBuilder = mp.bricks();
+
+
+		// mp.bricks().create("wallet", "wallet_container", {
+		// 	initialization: {
+		// 		preferenceId: @Model.Preference.Id.ToString(),
+		// 		redirectMode: "modal",
+		// 	},
+		// });
+
+		// const mercadopago = new MercadoPago('TEST-fa979d3b-88c5-47de-a3d8-3e0d35ca35ec', {	locale: 'es-AR' })
+		// const bricksBuilder = mercadopago.bricks();
+		// const renderComponent = async (bricksBuilder) => {
+		// 	const settings = {
+		// 		initialization: {
+		// 			preferenceId: @Model.Preference.Id.ToString(),
+		// 			redirectMode: "blank",
+		// 		},
+		// 	};
+		// 	const controller = await bricksBuilder.create(
+		// 		'wallet',
+		// 		'wallet_container',
+		// 		settings
+		// 	);
+
+		// };
+		// renderComponent(bricksBuilder);
+
+		// const client = new MercadoPagoConfig({ accessToken: 'TEST-1873877444627449-121619-72ba60b4616ba168aaca763c0ee86b65-1037972918' });
+
+		// // Step 3: Initialize the API object
+		// const payment = new Payment(client);
+
+		// // Step 4: Create the request object
+		// const body = {
+		// 	transaction_amount: 12.34,
+		// 	description: '<DESCRIPTION>',
+		// 	payment_method_id: '<PAYMENT_METHOD_ID>',
+		// 	payer: {
+		// 		email: '<EMAIL>'
+		// 	},
+		// };
+
+		// // Step 5: Make the request
+		// payment.create({ body }).then(console.log).catch(console.log);
+	</script>
+}
+
+
+

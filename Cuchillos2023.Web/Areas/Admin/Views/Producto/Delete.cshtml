@@ -1,0 +1,31 @@
+﻿@using Cuchillos2023.Models;
+@model Producto
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<form method="post" asp-action="Delete">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Borrar Producto</h2>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Cuchillo.NombreCuchillo"></label>
+            <input asp-for="Cuchillo.NombreCuchillo" class="form-control" disabled />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Numero.Numeroo"></label>
+            <input asp-for="Numero.Numeroo" class="form-control" disabled />
+        </div>
+        <button type="submit" class="btn btn-danger" style="width:200px">
+            <i class="bi bi-floppy"></i> &nbsp;
+            Borrar
+        </button>
+        <a asp-controller="Producto" asp-action="Index" style="width:200px" class="btn btn-success">
+            <i class="bi bi-backspace"></i>  &nbsp;
+            Volver
+        </a>
+    </div>
+</form>
+

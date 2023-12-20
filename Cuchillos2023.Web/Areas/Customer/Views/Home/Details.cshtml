@@ -1,19 +1,27 @@
-﻿@model ShoppingCart
+﻿@using Microsoft.AspNetCore.Identity;
+
+@model ShoppingCart
 @{
     ViewData["Title"] = "Details";
 }
 
 <form method="post">
-
+    <input hidden asp-for="@Model.ProductId" />
+    <input hidden asp-for="@Model.Quantity" />
+    @* <p>@Model.ProductId</p> *@
     <div class="card  container pt-4">
-        <div class="card-header bg-primary text-light ml-0  row ">
+        <div class="card-header bg-primary text-white ml-0  row ">
             <div class="col-12 col-md-6">
-                <h1 class="text-white-50">@Model.Cuchillo.NombreCuchillo</h1>
-                <p class="text-warning">by @Model.Cuchillo.NombreCuchillo</p>
+                <h1 class="text-white-50">@Model.Producto.Cuchillo.NombreCuchillo</h1>
+                @* <p class="text-warning">by @Model.Producto.Cuchillo.NombreCuchillo</p> *@
             </div>
+@*             <div class="col-12 col-md-6">
+                <h1 class="text-white-50">@Model.Producto.Numero.Numeroo</h1>
+                <p class="text-warning">by @Model.Producto.Numero.Numeroo</p>
+            </div> *@
             <div class="col-12 col-md-6 text-end pt-4">
-                <span class="badge bg-info pt-2" style="height:30px;">@Model.Cuchillo.Material.NombreMaterial</span>
-                <span class="badge bg-warning pt-2" style="height:30px;">@Model.Cuchillo.Categoria.NombreCategoria</span>
+                <span class="badge bg-info pt-2" style="height:30px;">Material: @Model.Producto.Cuchillo.Material.NombreMaterial</span>
+                <span class="badge bg-warning pt-2" style="height:30px;">Tipo: @Model.Producto.Cuchillo.Categoria.NombreCategoria</span>
             </div>
         </div>
         <div class="card-body row container">
@@ -22,34 +30,45 @@
                     <div class="col-8 col-lg-8">
 
                         <div class="row pl-2">
-                            <h5 class="text-muted">Cuchillo : @Model.Cuchillo.NombreCuchillo</h5>
+                            <h5 class="text-muted">Número: @Model.Producto.Numero.Numeroo</h5>
                         </div>
                         <div class="row pl-2">
-                            <h5 class="text-muted pb-2">List Price: <strike>@Model.Cuchillo.NombreCuchillo</strike></h5>
+                            <h5 class="text-muted pb-2">Precio: $ @Model.Producto.Cuchillo.Precio</h5>
                         </div>
                  
-                        <div class="row pl-2">
-                            <p class="text-secondary">@Html.Raw(@Model.Cuchillo.Precio)</p>
-                        </div>
-                        <div class="row pl-2">
-                            <div class="col-2 text-primary"><h4>Count</h4></div>
+                        @* <div class="row pl-2">
+                            <p class="text-secondary">@Html.Raw(@Model.Producto.Cuchillo.Precio)</p>
+                        </div> *@
+
+@*                         <div class="row pl-2">
+                            <div class="col-2 text-info"><h4>Cantidad:</h4></div>
                             <div class="col-10">@Model.Quantity</div>
-                        </div>
+                        </div> *@
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1 text-center">
-                        <img src="@Model.Cuchillo.ImagenUrl" width="100%" class="rounded" />
+                        <img src="@Model.Producto.Cuchillo.ImagenUrl" width="100%" class="rounded" />
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div class="row">
-                <div class="col-12 col-md-6 pb-1">
-                    <a class="btn btn-success form-control " style="height:50px;" asp-action="Index">Volver al Inicio</a>
-                </div>
-                <div class="col-12 col-md-6 pb-1">
-                    <button type="submit" value="Add to Cart" class="btn btn-primary form-control" style="height:50px;">Añadir al Carrito</button>
-                </div>
+                @if (!User.IsInRole("Customer"))
+                {
+                    <div class="col-12 col-md-12 pb-1">
+                        <a class="btn btn-success form-control " style="height:50px;" asp-action="Index">Volver al Inicio</a>
+                    </div>
+                }
+                @if (User.IsInRole("Customer"))
+                {
+                    <div class="col-12 col-md-6 pb-1">
+                        <a class="btn btn-success form-control " style="height:50px;" asp-action="Index">Volver al Inicio</a>
+                    </div>
+
+                    <div class="col-12 col-md-6 pb-1">
+                        <button type="submit" value="Add to Cart" class="btn btn-primary form-control" style="height:50px;">Añadir al Carrito</button>
+                    </div>                  
+                }
             </div>
         </div>
     </div>

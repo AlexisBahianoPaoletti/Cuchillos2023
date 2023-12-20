@@ -1,0 +1,26 @@
+﻿@model int
+
+<div class="container row pt-4">
+    <div class="col-12 text-center">
+        <h1 class="text-white text-center">¡COMPRA REALIZADA CON ÉXITO!</h1>
+        ID de Transacción: @Model <br /><br />
+        <img src="~/imagenes/GreenCheck.png" width="20%" />
+    </div>
+
+    <div class="col-12 text-center" style="color:white">
+        <br />
+        Gracias por comprar en Cuchillos Camperos.
+        <br />
+    </div>
+
+    <div>
+        <p >
+            <br />
+        </p>
+    </div>
+
+    <div class="col-12 text-center">
+        <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-info btn-sm">Volver a Comprar</a>
+    </div>
+</div>
+

@@ -54,7 +54,7 @@ namespace Cuchillos2023.Web.Areas.Admin.Controllers
             }
             else
             {
-                var wwwRootPath = _webHostEnvironment.ContentRootPath;
+                var wwwRootPath = _webHostEnvironment.WebRootPath;
                 cuchilloVm.Cuchillo = _unitOfWork.Cuchillos.Get(c => c.Id == id.Value);
                 if (cuchilloVm.Cuchillo.ImagenUrl != null)
                 {
@@ -98,6 +98,8 @@ namespace Cuchillos2023.Web.Areas.Admin.Controllers
                 var wwwRootPath = _webHostEnvironment.WebRootPath;
                 var fileName = Guid.NewGuid().ToString();
                 var extension = Path.GetExtension(file.FileName);
+                
+                var cuchilloFile = fileName + extension;
 
                 if (cuchilloVm.Cuchillo.ImagenUrl != null)
                 {
@@ -111,11 +113,11 @@ namespace Cuchillos2023.Web.Areas.Admin.Controllers
 
                 var uploadFolder = Path.Combine(wwwRootPath, @"imagenes\cuchillos\");
                 using (var fileStream = new FileStream(Path.Combine(
-                    uploadFolder, fileName + extension), FileMode.Create))
+                    uploadFolder, cuchilloFile), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
-                cuchilloVm.Cuchillo.ImagenUrl = @"\imagenes\cuchillos\" + fileName + extension;
+                cuchilloVm.Cuchillo.ImagenUrl = @"\imagenes\cuchillos\" + cuchilloFile;
             }
             if (cuchilloVm.Cuchillo.Id == 0)
             {

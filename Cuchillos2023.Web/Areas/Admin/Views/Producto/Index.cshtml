@@ -1,0 +1,71 @@
+﻿@using Cuchillos2023.Web.ViewModels;
+@model IEnumerable<ProductoListVm>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Lista de Productos</h2>
+
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Producto" asp-action="UpSert" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp;
+                Nuevo Producto
+            </a>
+        </div>
+    </div>
+    <table id="tblProductos" class="table table-bordered table-striped">
+        <thead>
+            <tr>              
+                <th style="width:35%">Cuchillo</th>
+                <th style ="width:10%">Número</th>
+                <th style="width:13%">Stock</th>
+                <th style="width:14%">Precio</th>
+                <th style="width:10%">Imagen</th>
+                <th style="width:20%">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NombreCuchillo</td>
+                        <td>@item.Numero</td>
+                        <td>@item.Stock</td>
+                        <td>$ @item.Precio</td>
+                        <td><img src="@item.ImagenUrl" width="150" height="100px" class="card-img-top rounded" /></td>
+                        
+                        <td>
+                            <a class="btn btn-warning" asp-controller="Producto" asp-action="UpSert" asp-route-id="@item.Id">
+                                <i class="bi bi-pencil-square"></i>&nbsp;
+                                Editar
+                            </a>
+                            <a class="btn btn-danger" asp-controller="Producto" asp-action="Delete" asp-route-id="@item.Id">
+                                <i class="bi bi-trash3"></i> &nbsp;
+                                Borrar
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">
+                        Aún no se han agregado productos
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

@@ -4,6 +4,7 @@ using Cuchillos2023.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cuchillos2023.DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231215033341_UpdateTableOrderHeaders")]
+    partial class UpdateTableOrderHeaders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,7 +221,7 @@ namespace Cuchillos2023.DataLayer.Migrations
                     b.Property<string>("Carrier")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
+                    b.Property<string>("Ciudad")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -234,6 +237,10 @@ namespace Cuchillos2023.DataLayer.Migrations
 
                     b.Property<double>("OrderTotal")
                         .HasColumnType("float");
+
+                    b.Property<string>("Pais")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
@@ -251,15 +258,15 @@ namespace Cuchillos2023.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Provincia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SessionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ShippingDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAddress")
                         .IsRequired()
@@ -595,6 +602,9 @@ namespace Cuchillos2023.DataLayer.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CiudadId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -607,6 +617,8 @@ namespace Cuchillos2023.DataLayer.Migrations
 
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("CiudadId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -769,6 +781,17 @@ namespace Cuchillos2023.DataLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Cuchillos2023.Models.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("Cuchillos2023.Models.Models.Ciudad", "Ciudad")
+                        .WithMany()
+                        .HasForeignKey("CiudadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ciudad");
                 });
 #pragma warning restore 612, 618
         }

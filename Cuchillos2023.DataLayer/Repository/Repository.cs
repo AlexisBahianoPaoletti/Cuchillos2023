@@ -3,6 +3,7 @@ using Cuchillos2023.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -24,18 +25,26 @@ namespace Cuchillos2023.DataLayer.Repository
         public void Add(T entity)
         {
             _dbSet.Add(entity);
-            _db.SaveChanges();
+            //_db.SaveChanges();
         }
 
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);
-            _db.SaveChanges();
+            //_db.SaveChanges();
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? propertiesNames = null)
+        public T Get(Expression<Func<T, bool>> filter, string? propertiesNames = null, bool tracked = true)
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query;
+            if (tracked)
+            {
+                query = _dbSet;
+            }
+            else
+            {
+                query = _dbSet.AsNoTracking();
+            }
             query = query.Where(filter);
             if (propertiesNames != null)
             {
@@ -45,12 +54,18 @@ namespace Cuchillos2023.DataLayer.Repository
                     query = query.Include(property);
                 }
             }
+
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? propertiesNames = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? propertiesNames = null)
         {
             IQueryable<T> query = _dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+
+            }
             if (propertiesNames != null)
             {
                 var properties = propertiesNames.Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -60,6 +75,12 @@ namespace Cuchillos2023.DataLayer.Repository
                 }
             }
             return query.ToList();
+
+        }
+
+        public void RemoveRange(IEnumerable<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
         }
     }
 }

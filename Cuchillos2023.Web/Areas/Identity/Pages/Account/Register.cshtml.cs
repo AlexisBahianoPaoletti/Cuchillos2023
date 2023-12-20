@@ -35,6 +35,8 @@ namespace Cuchillos2023.Web.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
 
+        //private List<Ciudad> listaCiudades = new List<Ciudad>();
+
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
@@ -50,6 +52,8 @@ namespace Cuchillos2023.Web.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            //listaCiudades= 
+
         }
 
         /// <summary>
@@ -108,6 +112,7 @@ namespace Cuchillos2023.Web.Areas.Identity.Pages.Account
             [Required]
             public string Name { get; set; }
             public string StreetAddress { get; set; }
+            
             public string City { get; set; }
             public string State { get; set; }
             public string ZipCode { get; set; }
@@ -151,6 +156,8 @@ namespace Cuchillos2023.Web.Areas.Identity.Pages.Account
                 user.ZipCode = Input.ZipCode;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.Name = Input.Name;
+
+
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
